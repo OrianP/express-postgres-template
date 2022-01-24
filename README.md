@@ -28,15 +28,58 @@ The steps I followed to create this project template
   }
 }
 ```
-9. Create a file for writing your tests inside `cypress/integration/`
-10. Delete auto-generated `example/` folder (optional)
+9. Run the test script you just edited   
+`npm run test`
+This will create a cypress folder in your root directory  
+10. Delete any unwanted auto-generated folders (i.e `integration/1-getting-started`) (optional)
+```
+cd cypress/integration
+rm -r <folder-name>
+```
+11. Create a file for writing your tests inside `cypress/integration/`
+`touch test.js`
+
 #### Database
-11. Install [node-postgres](https://node-postgres.com/) library (a collection of node.js modules for interfacing with your PostgreSQL database).  
+12. Install [node-postgres](https://node-postgres.com/) library (a collection of node.js modules for interfacing with your PostgreSQL database).  
 `npm install pg`
 13. Install the [dotenv](https://www.npmjs.com/package/dotenv) library  
 `npm install dotenv`
-14. create db
-15. populate db
+14. **Create and populate database**:
+    - Create a `scripts` folder in your root directory
+    - Follow the steps in this [example repo](https://github.com/oliverjam/express-postgres-example) by [oliverjam](https://github.com/oliverjam) for writing script files that will create and populate your database 
+    - Remember to change the permissions on each of your script files in your terminal to make them executable    
+    `chmod +x ./scripts/your-filename`
+    - Create your local database by running the create_db script with the name you want to give your database
+    ```
+    ./scripts/create_db <your-db-name>
+    ```
+    This will create a user, database and .env file containing the DATABASE_URL environment variable
+    - Create a `database` folder in your root directory and create `connection.js` and `init.sql` files witihn it
+    ```
+    > mkdir database
+    > cd database
+    > touch connection.js init.sql
+    ```
+    - Add the following code inside `connection.js`
+    ```
+    const pg = require("pg");
+
+    if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL environment variable is not set");
+    }
+
+    const db = new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    });
+
+    module.exports = db;
+    ```
+    - Create a database table and insert some example data into it inside your `init.sql` i.e
+    - Run the script to populate your database
+    `./scripts/populate_db`
+    - Check your database in psql...
+   
+15. Add basic server code...
 16. Add a `dev` command to your script in `package.json`. This tells Node to use the dotenv library to load env vars before our server starts.
 ```
 {
@@ -45,3 +88,5 @@ The steps I followed to create this project template
   }
 }
 ```
+
+
