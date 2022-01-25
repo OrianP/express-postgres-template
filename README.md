@@ -1,4 +1,4 @@
-# express-postgres-template
+# Express-Postgres Project Template
 
 A project setup template with express server, postgres database and cypress testing.  
 This guide is based on [Founders and Coders](https://learn.foundersandcoders.com/) curriculum.
@@ -7,29 +7,29 @@ This guide is based on [Founders and Coders](https://learn.foundersandcoders.com
 
 Before you begin, make sure you [install npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)!
 
-The steps I followed to create this project template
+Here are the steps I followed to create this project template:
 
-1. Create a repo on GitHub
-2. Clone to your local machine
-3. Add a `.gitignore` file (I added this when I created the repo on GitHub and deleted any irrelevant template content)
+- Create a new repo on GitHub
+- Clone to your local machine
+- Add a `.gitignore` file (I added this when I created the repo on GitHub and deleted any irrelevant template content)
 
-### In your terminal
+## In your terminal
 
-4. Initialise the project to create a package.json  
+- Initialise the project to create a package.json  
    `npm init -y`
 
-#### Server
+### Server
 
-5. Install the Express server library  
+- Install the Express server library  
    `npm install express`
-6. Install nodemon. This is a helper that auto-restarts your server when you save changes  
+- Install nodemon. This is a helper that auto-restarts your server when you save changes  
    `npm install nodemon`
 
-#### Tests
+### Tests
 
-7. Install Cypress for testing  
+- Install Cypress for testing  
    `npm install -D cypress`
-8. Once Cypress is installed, open your `package.json` and edit the `"test"` script:
+- Once Cypress is installed, open your `package.json` and edit the `"test"` script:
 
 ```
 {
@@ -39,27 +39,26 @@ The steps I followed to create this project template
 }
 ```
 
-9. Run the test script you just edited  
+- Run the test script you just edited. This will create a cypress folder in your root directory  
    `npm run test`
-   This will create a cypress folder in your root directory
-10. Delete any unwanted auto-generated folders (i.e `integration/1-getting-started`) (optional)
+   
+- Delete any unwanted auto-generated folders (i.e `integration/1-getting-started`) (optional)
 
 ```
 cd cypress/integration
 rm -r <folder-name>
 ```
 
-11. Create a file for writing your tests inside `cypress/integration/`
-    ```
-    touch test.js
-    ```
-12. Configure your `baseUrl` property in the `cypress.json` file inside your root directory. This will allow you to simply use `cy.visit("/")` in cypress tests to visit the home route instead of specifying the localhost url in every test
+- Create a file for writing your tests inside `cypress/integration/`
+    `touch test.js`
+    
+- Configure your `baseUrl` property in the `cypress.json` file inside your root directory. This will allow you to simply use `cy.visit("/")` in cypress tests to visit the home route instead of specifying the localhost url in every test
 ```
 {
     "baseUrl": "http://localhost:3000"
 }
 ```
-12. Add basic starter tests to your `test.js` file
+- Add basic starter tests to your `test.js` file
 
 ```
 // Wrap tests in a describe to run together
@@ -78,19 +77,22 @@ describe("homepage tests", () => {
 
 Run `npm run test` when you want to run your tests
 
-#### Database
+### Database
 
-12. Install [node-postgres](https://node-postgres.com/) library (a collection of node.js modules for interfacing with your PostgreSQL database).  
+- Install [node-postgres](https://node-postgres.com/) library (a collection of node.js modules for interfacing with your PostgreSQL database).  
     `npm install pg`
-13. Install the [dotenv](https://www.npmjs.com/package/dotenv) library  
+- Install the [dotenv](https://www.npmjs.com/package/dotenv) library  
     `npm install dotenv`
-14. **Create and populate database**:
+    
+## Create and populate database:
 
-    - Create a `scripts` folder in your root directory
-    - Follow the steps in this [example repo](https://github.com/oliverjam/express-postgres-example) by [oliverjam](https://github.com/oliverjam) for writing script files that will create and populate your database
-    - Remember to change the permissions on each of your script files in your terminal to make them executable  
-      `chmod +x ./scripts/your-filename`
-    - Create your local database by running the create_db script with the name you want to give your database
+- Create a `scripts` folder in your root directory
+- Follow the steps in this [example repo](https://github.com/oliverjam/express-postgres-example) by [oliverjam](https://github.com/oliverjam) for writing script files that will create and populate your database
+- Remember to change the permissions on each of your script files in your terminal to make them executable  
+   ```
+   chmod +x ./scripts/your-filename
+   ```
+- Create your local database by running the create_db script with the name you want to give your database
 
     ```
     ./scripts/create_db <your-db-name>
@@ -98,15 +100,15 @@ Run `npm run test` when you want to run your tests
 
     This will create a user, database and .env file containing the DATABASE_URL environment variable
 
-    - Create a `database` folder in your root directory and create `connection.js` and `init.sql` files witihn it
+ - Create a `database` folder in your root directory and create `connection.js` and `init.sql` files witihn it
 
     ```
-    > mkdir database
-    > cd database
-    > touch connection.js init.sql
+    mkdir database
+    cd database
+    touch connection.js init.sql
     ```
 
-    - Add the following code inside `connection.js`. See comments in `connection.js` of this repo for explanation
+- Add the following code inside `connection.js`. See comments in `connection.js` of this repo for explanation
 
     ```
     const pg = require("pg");
@@ -122,7 +124,7 @@ Run `npm run test` when you want to run your tests
     module.exports = db;
     ```
 
-    - Create a database table and insert some example data into it inside your `init.sql` i.e:
+ - Create a database table and insert some example data into it inside your `init.sql` i.e:
 
     ```
     BEGIN;
@@ -144,28 +146,30 @@ Run `npm run test` when you want to run your tests
     COMMIT;
     ```
 
-    - Run the script to populate your database
+ - Run the script to populate your database
 
     ```
     ./scripts/populate_db
     ```
 
-    - Check that your database has been populated by connecting and retrieving data from it in psql
+  - Check that your database has been populated by connecting and retrieving data from it in psql
 
     ```
-    > psql
-    > \list
-    > \connect <your-db-name>
-    > \ SELECT * FROM <your-db-table-name>
+    psql
+    \list
+    \connect <your-db-name>
+    \ SELECT * FROM <your-db-table-name>
     ```
+    
+### Back to the server for some basic code setup! 
 
-15. Create a `server.js` file in your root directory
+- Create a `server.js` file in your root directory
 
 ```
 touch server.js
 ```
 
-16. Add basic server code in your `server.js` file
+- Add basic server code in your `server.js` file
 
 ```
 // require express server
@@ -207,7 +211,7 @@ server.listen(PORT, () => {
 
 ```
 
-16. Add a `dev` command to your script in `package.json`. This tells Node to use the dotenv library to load env vars before our server starts.
+- Add a `dev` command to your script in `package.json`. This tells Node to use the dotenv library to load env vars before our server starts.
 
 ```
 {
@@ -217,23 +221,23 @@ server.listen(PORT, () => {
 }
 ```
 
-17. Run the dev command to start the server
+- Run the dev command to start the server
 
 ```
 npm run dev
 ```
 
-Mission accomplished!
+🥳 **Mission accomplished!** 🥳
 
-#### Extra bits
+### Extra bits...
 
-##### CSS file
+#### CSS file
 
 Add `public` folder in root directory and create `style.css` file inside it
 
 ```
-> mkdir public
-> touch public/style.css
+mkdir public
+touch public/style.css
 ```
 
 Add this code inside your `server.js`:
@@ -252,7 +256,7 @@ Add the following inside `<head>` tag of html
 <link rel="stylesheet" type="text/css" href="./style.css">
 ```
 
-##### reset database in Cypress tests
+#### Reset database in Cypress tests
 
 Configure Cypress to run the `populate_db` script on every Cypress 'task'. This will repopulate the db with the code in your `init.sql`, essentially 'resetting' the db.
 
