@@ -31,7 +31,7 @@ Here are the steps I followed to create this project template:
    `npm install -D cypress`
 - Once Cypress is installed, open your `package.json` and edit the `"test"` script:
 
-```
+```JavaScript
 {
   "scripts": {
     "test": "cypress open"
@@ -53,14 +53,14 @@ rm -r <folder-name>
     `touch test.js`
     
 - Configure your `baseUrl` property in the `cypress.json` file inside your root directory. This will allow you to simply use `cy.visit("/")` in cypress tests to visit the home route instead of specifying the localhost url in every test
-```
+```JavaScript
 {
     "baseUrl": "http://localhost:3000"
 }
 ```
 - Add basic starter tests to your `test.js` file
 
-```
+```JavaScript
 // Wrap tests in a describe to run together
 
 describe("homepage tests", () => {
@@ -110,7 +110,7 @@ Run `npm run test` when you want to run your tests
 
 - Add the following code inside `connection.js`. See comments in `connection.js` of this repo for explanation
 
-    ```
+    ```JavaScript
     const pg = require("pg");
 
     if (!process.env.DATABASE_URL) {
@@ -126,7 +126,7 @@ Run `npm run test` when you want to run your tests
 
  - Create a database table and insert some example data into it inside your `init.sql` i.e:
 
-    ```
+    ```SQL
     BEGIN;
 
     -- Remove existing tables and repopulate db when script runs
@@ -171,7 +171,7 @@ touch server.js
 
 - Add basic server code in your `server.js` file
 
-```
+```JavaScript
 // require express server
 const { request, response } = require("express");
 const express = require("express");
@@ -213,7 +213,7 @@ server.listen(PORT, () => {
 
 - Add a `dev` command to your script in `package.json`. This tells Node to use the dotenv library to load env vars before our server starts.
 
-```
+```JavaScript
 {
   "scripts": {
     "dev": "nodemon -r dotenv/config server.js"
@@ -242,7 +242,7 @@ touch public/style.css
 
 Add this code inside your `server.js`:
 
-```
+```JavaScript
 // add static handler to have access to all files inside public
 const staticHandler = express.static("public");
 
@@ -252,7 +252,7 @@ server.use(staticHandler);
 
 Add the following inside `<head>` tag of html
 
-```
+```HTML
 <link rel="stylesheet" type="text/css" href="./style.css">
 ```
 
@@ -262,7 +262,7 @@ Configure Cypress to run the `populate_db` script on every Cypress 'task'. This 
 
 Edit `index.js` file inside `cypress/plugins` with following code:
 
-```
+```JavaScript
 const { execFileSync } = require("child_process");
 
 module.exports = (on, config) => {
@@ -277,7 +277,7 @@ module.exports = (on, config) => {
 
 Add the following to your `cypress/integration/tests.js` file to run the task before each test
 
-```
+```JavaScript
 beforeEach(() => {
   cy.task("resetDb");
 });
