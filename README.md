@@ -84,7 +84,7 @@ Run `npm run test` when you want to run your tests
 - Install the [dotenv](https://www.npmjs.com/package/dotenv) library  
     `npm install dotenv`
     
-## Create and populate database:
+#### Create and populate database:
 
 - Create a `scripts` folder in your root directory
 - Follow the steps in this [example repo](https://github.com/oliverjam/express-postgres-example) by [oliverjam](https://github.com/oliverjam) for writing script files that will create and populate your database
