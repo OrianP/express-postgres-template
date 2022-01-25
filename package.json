@@ -4,7 +4,8 @@
   "description": "A project setup template with express server, postgres database and cypress testing.    This guide is based on [Founders and Coders](https://learn.foundersandcoders.com/) curriculum.",
   "main": "index.js",
   "scripts": {
-    "test": "cypress open"
+    "test": "cypress open",
+    "dev": "nodemon -r dotenv/config server.js"
   },
   "repository": {
     "type": "git",
