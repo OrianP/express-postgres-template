@@ -60,7 +60,7 @@ rm -r <folder-name>
     > cd database
     > touch connection.js init.sql
     ```
-    - Add the following code inside `connection.js`
+    - Add the following code inside `connection.js`. See comments in `connection.js` of this repo for explanation
     ```
     const pg = require("pg");
 
@@ -75,9 +75,18 @@ rm -r <folder-name>
     module.exports = db;
     ```
     - Create a database table and insert some example data into it inside your `init.sql` i.e
+    ```
+
+    ```
     - Run the script to populate your database
     `./scripts/populate_db`
-    - Check your database in psql...
+    - Check that your database has been populated by connecting and retrieving data from it in psql
+    ```
+    > psql
+    > \list 
+    > \connect <your-db-name>
+    > \ SELECT * FROM <your-db-table-name>
+    ```
    
 15. Add basic server code...
 16. Add a `dev` command to your script in `package.json`. This tells Node to use the dotenv library to load env vars before our server starts.
