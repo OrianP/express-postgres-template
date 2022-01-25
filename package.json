@@ -1,0 +1,30 @@
+{
+  "name": "express-postgres-template",
+  "version": "1.0.0",
+  "description": "A project setup template with express server, postgres database and cypress testing.    This guide is based on [Founders and Coders](https://learn.foundersandcoders.com/) curriculum.",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open",
+    "dev": "nodemon -r dotenv/config server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OrianP/express-postgres-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OrianP/express-postgres-template/issues"
+  },
+  "homepage": "https://github.com/OrianP/express-postgres-template#readme",
+  "dependencies": {
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "cypress": "^9.3.1"
+  }
+}
