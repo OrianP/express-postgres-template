@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/OrianP/express-postgres-template#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "nodemon": "^2.0.15",
