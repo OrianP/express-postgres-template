@@ -3,16 +3,18 @@ const { request, response } = require("express");
 const express = require("express");
 const server = express();
 
-// Body parser middleware to parse request body
+// body parser middleware to parse request body
 const bodyParser = express.urlencoded({ extended: false });
-
-// use parser in all routes
+// use in all routes
 server.use(bodyParser);
 
-// add static handler to have access to all files inside public
+// add static handler to allow access to all files inside public
 const staticHandler = express.static("public");
-// pass into .use
 server.use(staticHandler);
+
+// cookie parser
+const cookieParser = require("cookie-parser");
+server.use(cookieParser());
 
 // create home route with basic html template
 server.get("/", (request, response) => {
