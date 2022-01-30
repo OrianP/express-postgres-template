@@ -160,6 +160,11 @@ Run `npm run test` when you want to run your tests
     \connect <your-db-name>
     \ SELECT * FROM <your-db-table-name>
     ```
+  - Create a `model.js` file inside the `database` folder. This is where you will write your database queries. Import the db variable from `connection.js`:
+
+  ```JavaScript
+  const db = require("./connection.js");
+  ```
     
 ### Back to the server for some basic code setup! 
 
@@ -282,3 +287,74 @@ beforeEach(() => {
   cy.task("resetDb");
 });
 ```
+
+#### Cookies
+- Install the cookie-parser middleware to allow your server to read cookies from incoming requests. It will parse the cookie into an object, then attach it to the request object for you to use
+
+```JavaScript 
+npm install cookie-parser
+```
+
+- Require the middleware in your `server.js` and set it to be used in every route
+
+```JavaScript 
+const cookieParser = require("cookie-parser");
+server.use(cookieParser());
+```
+- Create an `auth.js` folder in your root directory. This is where you will handle password hashing, password comparison, setting session id's and any other handlers for authentication
+
+- Create a `COOKIE_OPTIONS` variable inside `auth.js`. This object defines the cookie attributes for cookies you set in the server. You will need to pass this object into the `response.cookie` method when setting a cookie
+
+```JavaScript 
+const COOKIE_OPTIONS = {
+  // prevent client-side JS from accessing cookie
+  httpOnly: true,
+  // no. of milliseconds the cookie will be valid for
+  maxAge: 600000,
+  // stop cookie from being sent on requests made from other domains
+  sameSite: "lax",
+  // specify if cookie is signed
+  signed: true,
+  // only send cookie to the server with an encrypted request over HTTPS
+  secure: true;
+};
+```
+
+- Do not use the `secure` attribute in development (since localhost server does not use https) but do include it in production.
+
+- To set a cookie: use the built in `response.cookie` method. It takes three arguments, the name, the value, and an optional object for all the cookie options. It creates the “set-cookie” header string automatically
+
+```JavaScript
+server.get('/login', (request, response) => {
+  // set a long random string session id for server-side session authentication
+  const sid = crypto.randomBytes(18).toString("base64");
+  // set cookie 
+  response.cookie('sid', sid, COOKIE_OPTIONS);
+  response.redirect('/profile');
+})
+```
+
+- To read a cookie: use the built in `request.cookies` or `request.signedCookies` method to access cookies sent to the server (unsigned and signed respectively)
+
+```JavaScript
+server.post('/login', (request, response) => {
+  console.log(request.signedCookies);
+}
+```
+
+- To clear a cookie: use the `response.clearCookie` method for removing cookies. It takes the name of the cookie to remove. When the browser receives this response it will delete the matching cookie.
+
+```JavaScript
+server.get('/logout', (request, response) => {
+  const sid = // get session id from database
+  request.clearCookie(sid);
+  response.redirect("/");
+}
+```
+
+##### Signing the cookie
+In cryptography signing refers to using a mathematical operation based on a secret string to transform a value. This signature will always be the same assuming the same secret and the same input value. Without the secret it is impossible to reproduce the same signature.
+
+If we sign our cookie we can validate that it has not been tampered with, since only our server knows the secret required to create a valid signature.
+
+You need to pass a random secret string to the cookieParser() middleware function. Then you can specify signed: true in the cookie options. Signed cookies are available at a different request key to normal cookies: request.signedCookies.
