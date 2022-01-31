@@ -303,7 +303,7 @@ server.use(cookieParser());
 ```
 - Create an `auth.js` folder in your root directory. This is where you will handle password hashing, password comparison, setting session id's and any other handlers for authentication
 
-- Require crypto 
+- Require crypto inside `auth.js`
 ```JavaScript
 const crypto = require("crypto");
 ```
