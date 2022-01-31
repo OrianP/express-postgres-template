@@ -303,6 +303,13 @@ server.use(cookieParser());
 ```
 - Create an `auth.js` folder in your root directory. This is where you will handle password hashing, password comparison, setting session id's and any other handlers for authentication
 
+- Require crypto 
+```JavaScript
+const crypto = require("crypto");
+```
+
+This will be used to generate a random string for the `sid` variable for server-side session authentication when setting a cookie
+
 - Create a `COOKIE_OPTIONS` variable inside `auth.js`. This object defines the cookie attributes for cookies you set in the server. You will need to pass this object into the `response.cookie` method when setting a cookie
 
 ```JavaScript 
