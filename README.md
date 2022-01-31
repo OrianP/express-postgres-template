@@ -371,6 +371,35 @@ Pass the cookie secret in to the `cookieParser()` middleware in `server.js`
 server.use(cookieParser(process.env.COOKIE_SECRET));
 ```
 
+#### Password Security
+- Install the `bcryptjs` library. It is designed specifically for passwords and has built in methods for hashing, salting and comparing passwords
+
+```
+npm install bcryptjs
+```
+
+- Require `bcrypt` in `auth.js`
+```JavaScript
+const bcrypt = require("bcryptjs");
+```
+
+BCrypt is deliberately slow in order to prevent brute-force attackes by hackers. The library’s methods are asynchronous and return promises. It has a method for generating a hash. This takes the string to hash and a number representing how strong the salt should be (the higher the number the longer it will take to hash)
+
+```JavaScript
+bcrypt.hash("hunter2", 10).then((hash) => console.log(hash));
+// "$2a$10$MFOIdSobXg.x3ZUfrB2VX.C49DYocYGtBQVJ78ZsC2YwgrALIn1oC"
+```
+
+It also has a method for comparing a string to a stored hash. This takes the (unhashed) string to compare as the first argument and the hash as the second argument
+
+```JavaScript
+bcrypt.compare("hunter2", storedHash).then((match) => console.log(match));
+// Logs: true if they match, false if not
+```
+
+BCrypt automatically stores the salt as part of the hash, so you don’t need to implement that yourself.
+
+
 
 
 
