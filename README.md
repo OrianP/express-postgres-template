@@ -316,7 +316,7 @@ const COOKIE_OPTIONS = {
   // specify if cookie is signed
   signed: true,
   // only send cookie to the server with an encrypted request over HTTPS
-  secure: true;
+  secure: true
 };
 ```
 
@@ -353,8 +353,25 @@ server.get('/logout', (request, response) => {
 ```
 
 ##### Signing the cookie
-In cryptography signing refers to using a mathematical operation based on a secret string to transform a value. This signature will always be the same assuming the same secret and the same input value. Without the secret it is impossible to reproduce the same signature.
-
 If we sign our cookie we can validate that it has not been tampered with, since only our server knows the secret required to create a valid signature.
 
-You need to pass a random secret string to the cookieParser() middleware function. Then you can specify signed: true in the cookie options. Signed cookies are available at a different request key to normal cookies: request.signedCookies.
+We need to pass a random secret string to the `cookieParser()` middleware function, then specify `signed: true` in the cookie options. Signed cookies are available to read at `request.signedCookies`
+
+Add a `COOKIE_SECRET` environment variable in your `.env` file
+
+```JavaScript
+COOKIE_SECRET = 'alongrandomstringofyourchoice12345'
+```
+
+Pass the cookie secret in to the `cookieParser()` middleware in `server.js`
+
+```JavaScript
+// COOKIE_SECRET lives in .env to ensure it does not get pushed to GitHub
+// it is used to sign cookies to ensure they have not been altered in the browser
+server.use(cookieParser(process.env.COOKIE_SECRET));
+```
+
+
+
+
+
