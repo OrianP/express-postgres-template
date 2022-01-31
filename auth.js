@@ -1,3 +1,5 @@
+const bcrypt = require("bcryptjs");
+
 // cookie attribute object to pass when assigning cookies
 const COOKIE_OPTIONS = {
     // prevent client-side JS from accessing cookie
