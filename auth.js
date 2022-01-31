@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 
 // cookie attribute object to pass when assigning cookies
