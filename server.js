@@ -14,7 +14,7 @@ server.use(staticHandler);
 
 // cookie parser
 const cookieParser = require("cookie-parser");
-server.use(cookieParser());
+server.use(cookieParser(process.env.COOKIE_SECRET));
 
 // create home route with basic html template
 server.get("/", (request, response) => {
